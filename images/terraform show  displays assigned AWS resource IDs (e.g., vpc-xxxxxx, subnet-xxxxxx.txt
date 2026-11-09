@@ -1,0 +1,206 @@
+C:\Users\ME\Desktop\DEVOP STECHHUB JUNE 1 2026\Project16\PBL>terraform show
+# aws_internet_gateway.gw:
+resource "aws_internet_gateway" "gw" {
+    arn      = "arn:aws:ec2:eu-central-1:330714580032:internet-gateway/igw-0f62139ff9f004416"
+    id       = "igw-0f62139ff9f004416"
+    owner_id = "330714580032"
+    tags     = {
+        "Name" = "PBL-IGW"
+    }
+    tags_all = {
+        "Name" = "PBL-IGW"
+    }
+    vpc_id   = "vpc-03dfe5c56dbeed5e6"
+}
+
+# aws_route_table.public_rt:
+resource "aws_route_table" "public_rt" {
+    arn              = "arn:aws:ec2:eu-central-1:330714580032:route-table/rtb-011eed5204cbf0c80"
+    id               = "rtb-011eed5204cbf0c80"
+    owner_id         = "330714580032"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = null
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = null
+            destination_prefix_list_id = null
+            egress_only_gateway_id     = null
+            gateway_id                 = "igw-0f62139ff9f004416"
+            ipv6_cidr_block            = null
+            local_gateway_id           = null
+            nat_gateway_id             = null
+            network_interface_id       = null
+            transit_gateway_id         = null
+            vpc_endpoint_id            = null
+            vpc_peering_connection_id  = null
+        },
+    ]
+    tags             = {
+        "Name" = "public-rt"
+    }
+    tags_all         = {
+        "Name" = "public-rt"
+    }
+    vpc_id           = "vpc-03dfe5c56dbeed5e6"
+}
+
+# aws_route_table_association.public_assoc:
+resource "aws_route_table_association" "public_assoc" {
+    gateway_id     = null
+    id             = "rtbassoc-0e8c46d8b6909f0f4"
+    route_table_id = "rtb-011eed5204cbf0c80"
+    subnet_id      = "subnet-0c20cd9b57f3490f3"
+}
+
+# aws_security_group.web_sg:
+resource "aws_security_group" "web_sg" {
+    arn                    = "arn:aws:ec2:eu-central-1:330714580032:security-group/sg-00fa1521dde5422f6"
+    description            = "Allow HTTP and SSH access"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = null
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-00fa1521dde5422f6"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = null
+            from_port        = 22
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 22
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = null
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+    ]
+    name                   = "web-server-sg"
+    name_prefix            = null
+    owner_id               = "330714580032"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "web-sg"
+    }
+    tags_all               = {
+        "Name" = "web-sg"
+    }
+    vpc_id                 = "vpc-03dfe5c56dbeed5e6"
+}
+
+# aws_subnet.private_1:
+resource "aws_subnet" "private_1" {
+    arn                                            = "arn:aws:ec2:eu-central-1:330714580032:subnet/subnet-015c92bc99d8303d3"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "eu-central-1a"
+    availability_zone_id                           = "euc1-az2"
+    cidr_block                                     = "172.16.32.0/20"
+    customer_owned_ipv4_pool                       = null
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-015c92bc99d8303d3"
+    ipv6_cidr_block                                = null
+    ipv6_cidr_block_association_id                 = null
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    outpost_arn                                    = null
+    owner_id                                       = "330714580032"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "private-subnet-1"
+    }
+    tags_all                                       = {
+        "Name" = "private-subnet-1"
+    }
+    vpc_id                                         = "vpc-03dfe5c56dbeed5e6"
+}
+
+# aws_subnet.public_1:
+resource "aws_subnet" "public_1" {
+    arn                                            = "arn:aws:ec2:eu-central-1:330714580032:subnet/subnet-0c20cd9b57f3490f3"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "eu-central-1a"
+    availability_zone_id                           = "euc1-az2"
+    cidr_block                                     = "172.16.1.0/24"
+    customer_owned_ipv4_pool                       = null
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0c20cd9b57f3490f3"
+    ipv6_cidr_block                                = null
+    ipv6_cidr_block_association_id                 = null
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    outpost_arn                                    = null
+    owner_id                                       = "330714580032"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "public-subnet-1"
+    }
+    tags_all                                       = {
+        "Name" = "public-subnet-1"
+    }
+    vpc_id                                         = "vpc-03dfe5c56dbeed5e6"
+}
+
+# aws_vpc.main:
+resource "aws_vpc" "main" {
+    arn                                  = "arn:aws:ec2:eu-central-1:330714580032:vpc/vpc-03dfe5c56dbeed5e6"
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = "172.16.0.0/16"
+    default_network_acl_id               = "acl-0bdc3b300cc574e70"
+    default_route_table_id               = "rtb-0a62726f91a48a57a"
+    default_security_group_id            = "sg-09e3d0f936e39fa48"
+    dhcp_options_id                      = "dopt-0d0c6f50b601b2172"
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-03dfe5c56dbeed5e6"
+    instance_tenancy                     = "default"
+    ipv6_association_id                  = null
+    ipv6_cidr_block                      = null
+    ipv6_cidr_block_network_border_group = null
+    ipv6_ipam_pool_id                    = null
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-0a62726f91a48a57a"
+    owner_id                             = "330714580032"
+    tags                                 = {
+        "Name" = "PBL-VPC"
+    }
+    tags_all                             = {
+        "Name" = "PBL-VPC"
+    }
+}
+
+C:\Users\ME\Desktop\DEVOP STECHHUB JUNE 1 2026\Project16\PBL>
