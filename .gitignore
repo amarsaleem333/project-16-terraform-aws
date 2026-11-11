@@ -1,4 +1,18 @@
-.terraform/
+# Ignore local state files (can contain secrets)
 *.tfstate
 *.tfstate.*
-.terraform.lock.hcl
+*.tfstate.backup
+
+# Ignore execution plans
+*.tfplan
+
+# Ignore variable files containing real secrets/account IDs
+terraform.tfvars
+*.auto.tfvars
+
+# Ignore local Terraform working directory
+.terraform/
+
+# Ignore AWS credential files
+*.csv
+credentials
