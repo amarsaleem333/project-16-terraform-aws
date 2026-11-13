@@ -1,33 +1,16 @@
-variable "environment" {
+variable "aws_region" {
   type        = string
-  default     = "dev"
-  description = "Deployment environment tag"
-}
-AWSTemplateFormatVersion: "2010-09-09"
-variable "region" {
-      default = "eu-central-1"
+  description = "Target AWS region for infrastructure deployment"
+  default     = "us-east-1"
 }
 
 variable "vpc_cidr" {
-    default = "172.16.0.0/16"
+  type        = string
+  description = "CIDR block for the main VPC"
+  default     = "10.0.0.0/16"
 }
 
-variable "enable_dns_support" {
-    default = "true"
-}
-
-variable "enable_dns_hostnames" {
-    default ="true" 
-}
-
-variable "enable_classiclink" {
-    default = "false"
-}
-
-variable "enable_classiclink_dns_support" {
-    default = "false"
-}
-
-  variable "preferred_number_of_public_subnets" {
-      default = null
+variable "allowed_ssh_cidr" {
+  type        = string
+  description = "Trusted CIDR block permitted for SSH access on port 22"
 }
